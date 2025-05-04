@@ -1,0 +1,5 @@
+Part B:
+	1.a. Resource bundles
+	    /src/main/resources/translation_en.properties	line 1
+	    /src/main/resources/translation_fr.properties	line 1
+    1.b.
