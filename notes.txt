@@ -2,4 +2,5 @@ Part B:
 	1.a. Resource bundles
 	    /src/main/resources/translation_en.properties	line 1
 	    /src/main/resources/translation_fr.properties	line 1
-    1.b.
+    1.b. Display the message in both English and French by applying the resource bundles using a different thread for each language.
+        /src/main/java/edu/wgu/d387_sample_code/D387SampleCodeApplication.java  lines [19-45]
