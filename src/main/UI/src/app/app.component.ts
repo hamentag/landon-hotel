@@ -27,26 +27,45 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  welcomeMessages: any = {};
 
-    ngOnInit(){
-      this.roomsearch= new FormGroup({
-        checkin: new FormControl(' '),
-        checkout: new FormControl(' ')
-      });
-
- //     this.rooms=ROOMS;
-
-
-    const roomsearchValueChanges$ = this.roomsearch.valueChanges;
-
-    // subscribe to the stream
-    roomsearchValueChanges$.subscribe(x => {
-      this.currentCheckInVal = x.checkin;
-      this.currentCheckOutVal = x.checkout;
+  ngOnInit(){
+    this.roomsearch= new FormGroup({
+      checkin: new FormControl(' '),
+      checkout: new FormControl(' ')
     });
+
+//     this.rooms=ROOMS;
+
+
+  const roomsearchValueChanges$ = this.roomsearch.valueChanges;
+
+  // subscribe to the stream
+  roomsearchValueChanges$.subscribe(x => {
+    this.currentCheckInVal = x.checkin;
+    this.currentCheckOutVal = x.checkout;
+  });
+
+  // Call the backend to fetch welcome messages
+    this.getWelcomeMessages();
   }
 
-    onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
+  // Method to send GET request to backend
+  getWelcomeMessages() {
+    this.httpClient.get<any>(this.baseURL + '/api/welcome')
+      .subscribe({
+        next: (response) => {
+          this.welcomeMessages = response.messages;
+          console.log('Welcome Messages: ', response.messages)
+        },
+        error: (error) => {
+          console.error('Failed to fetch welcome messages: ' + error.message);
+        }
+      });
+  }
+
+
+  onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
       this.getAll().subscribe(
 
         rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }

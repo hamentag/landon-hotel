@@ -15,6 +15,14 @@
     <nav id="nav" style="position: relative; top: 0; left: 0; bottom: auto; right: auto; width: 100%;">
       <div class="navbar">
         <div class="brand"><a href="/#welcome">Landon <span>Hotel</span></a></div>
+        <!--   Welcome Messages     -->
+        <div class="welcomeMsgContainer">
+          <div *ngFor="let item of welcomeMessages | keyvalue">
+            <h2>{{ item.value }}</h2>
+          </div>
+        </div>
+        <!--      -->
+
       </div><!-- navbar -->
     </nav>
   </div>
@@ -23,7 +31,7 @@
   <div class="scene" id="welcome">
     <article class="content">
 
- 
+
 
       <div class="row">
         <div class=""col-12>
@@ -58,7 +66,7 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
 
