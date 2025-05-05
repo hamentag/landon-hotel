@@ -2,6 +2,7 @@ Part B:
 	1.a. Resource bundles
 	    src/main/resources/translation_en.properties	line 1
 	    src/main/resources/translation_fr.properties	line 1
+
     1.b. Display the message in both English and French by applying the resource bundles using a different thread for each language.
         src/main/java/edu/wgu/d387_sample_code/D387SampleCodeApplication.java  lines [19-45]
         src/main/java/edu/wgu/d387_sample_code/rest/WelcomeController.java
@@ -10,3 +11,8 @@ Part B:
         src/main/UI/src/app/app.component.ts    Lines [30, 49-65]
         src/main/UI/src/app/app.component.html  Lines [18-24]
         src/main/UI/src/app/app.component.css   Lines [939-949]
+
+    2. Display the price for a reservation in currency rates for U.S. dollars ($), Canadian dollars (C$), and euros (€)
+        src/main/UI/src/app/app.component.html  Lines [86-88]
+
+    3.
