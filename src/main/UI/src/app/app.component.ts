@@ -28,6 +28,8 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
   welcomeMessages: any = {};
+  convertedTimes: any = {};
+  presentationMessage: string = '';
 
   ngOnInit(){
     this.roomsearch= new FormGroup({
@@ -46,20 +48,57 @@ export class AppComponent implements OnInit{
     this.currentCheckOutVal = x.checkout;
   });
 
-  // Call the backend to fetch welcome messages
-    this.getWelcomeMessages();
+  // Call the backend to fetch welcome messages and converted times
+    this.fetchWelcomeMessages();
+    this.fetchConvertedTimes();
   }
 
-  // Method to send GET request to backend
-  getWelcomeMessages() {
+  // Fetch welcome messages
+  fetchWelcomeMessages() {
     this.httpClient.get<any>(this.baseURL + '/api/welcome')
       .subscribe({
         next: (response) => {
-          this.welcomeMessages = response.messages;
-          console.log('Welcome Messages: ', response.messages)
+          this.welcomeMessages = response;
+          console.log('Welcome Messages: ', response)
         },
         error: (error) => {
           console.error('Failed to fetch welcome messages: ' + error.message);
+        }
+      });
+  }
+
+  // Generate a formatted message for the presentation
+  getPresentationMessage(): string {
+    if (
+      this.convertedTimes.date &&
+      this.convertedTimes.mountainTime &&
+      this.convertedTimes.easternTime &&
+      this.convertedTimes.utcTime
+    ) {
+      return (
+        `Join us for an online live presentation held at the Landon Hotel ` +
+        `on ${this.convertedTimes.date} ` +
+        `at ${this.convertedTimes.mountainTime} (Mountain Time) | ` +
+        `${this.convertedTimes.easternTime} (Eastern Time) | ` +
+        `${this.convertedTimes.utcTime} (UTC)`
+      );
+    } else {
+      return 'Loading presentation message...';
+    }
+  }
+
+  // Fetch converted times and set presentation message
+  fetchConvertedTimes() {
+    this.httpClient.get<any>(this.baseURL + '/api/converted-times')
+      .subscribe({
+        next: (response) => {
+          this.convertedTimes = response;
+          this.presentationMessage = this.getPresentationMessage();
+          console.log('Converted Times: ', response);
+          console.log('Presentation Message: ', this.presentationMessage)
+        },
+        error: (error) => {
+          console.error('Failed to fetch time data: ' + error.message);
         }
       });
   }

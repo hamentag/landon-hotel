@@ -7,9 +7,9 @@ Part B:
         src/main/java/edu/wgu/d387_sample_code/D387SampleCodeApplication.java  lines [19-45]
         src/main/java/edu/wgu/d387_sample_code/rest/WelcomeController.java
         src/main/java/edu/wgu/d387_sample_code/convertor/WelcomeService.java
-        src/main/UI/src/app/app.component.ts    Lines [30, 49-65]
+        src/main/UI/src/app/app.component.ts    Lines [30, 52, 56-68]
         src/main/UI/src/app/app.component.html  Lines [18-24]
-        src/main/UI/src/app/app.component.css   Lines [939-949]
+        src/main/UI/src/app/app.component.css   Lines [939-946]
 
     2. Display the price for a reservation in currency rates for U.S. dollars ($), Canadian dollars (C$), and euros (€)
         src/main/UI/src/app/app.component.html  Lines [86-88]
@@ -18,3 +18,7 @@ Part B:
         src/main/java/edu/wgu/d387_sample_code/rest/TimeConversionController.java
         src/main/java/edu/wgu/d387_sample_code/convertor/TimeConversionService.java
 
+    3.b. Display a message stating the time in all three times zones
+        src/main/UI/src/app/app.component.ts    Lines [31-32, 53, 70-104]
+        src/main/UI/src/app/app.component.html  Lines [38-40]
+        src/main/UI/src/app/app.component.css   Lines [948-952]
