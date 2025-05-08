@@ -7,7 +7,6 @@ Part B:
         src/main/java/edu/wgu/d387_sample_code/D387SampleCodeApplication.java  lines [19-45]
         src/main/java/edu/wgu/d387_sample_code/rest/WelcomeController.java
         src/main/java/edu/wgu/d387_sample_code/convertor/WelcomeService.java
-        src/main/java/edu/wgu/d387_sample_code/model/response/WelcomeResponse.java
         src/main/UI/src/app/app.component.ts    Lines [30, 49-65]
         src/main/UI/src/app/app.component.html  Lines [18-24]
         src/main/UI/src/app/app.component.css   Lines [939-949]
@@ -15,4 +14,7 @@ Part B:
     2. Display the price for a reservation in currency rates for U.S. dollars ($), Canadian dollars (C$), and euros (€)
         src/main/UI/src/app/app.component.html  Lines [86-88]
 
-    3.
+    3.a. Convert times between ET, MT, and UTC zones
+        src/main/java/edu/wgu/d387_sample_code/rest/TimeConversionController.java
+        src/main/java/edu/wgu/d387_sample_code/convertor/TimeConversionService.java
+
