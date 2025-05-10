@@ -136,3 +136,26 @@ http://3.131.153.93:8081
 The application loaded successfully and reflected all the changes implemented in parts B1 to B3.
 All tests returned the expected results, confirming that the application is accessible 
 externally and functioning as intended.
+
+---
+* Configuring Caddy for HTTPS Access:
+
+To make the application accessible over HTTPS using a custom subdomain, I configured the Caddy 
+web server on the EC2 instance. After confirming that the DNS for landon.eshop-in.pro pointed 
+to the EC2 public IP, I edited the Caddy configuration file located at /etc/caddy/Caddyfile 
+and added the following block:
+
+    landon.eshop-in.pro {
+    reverse_proxy localhost:8081
+    }
+
+This configuration instructs Caddy to forward incoming requests from landon.eshop-in.pro to the 
+Spring Boot application running on port 8081 inside the EC2 instance.
+
+    sudo systemctl reload caddy
+
+Caddy automatically provisioned an HTTPS certificate for the subdomain using Let's Encrypt. 
+I then verified the deployment by accessing the application in a web browser via:
+
+https://landon.eshop-in.pro
+
