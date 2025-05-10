@@ -940,9 +940,9 @@ footer #socialmedia ul li img {
 .welcomeMsgContainer {
   display: flex;
   flex-direction: column;
-  h2 {
-    color: lawngreen;
-  }
+}
+.welcomeMsgContainer h2 {
+  color: lawngreen;
 }
 /* -- */
 .presentation-msg p{
