@@ -1,3 +1,8 @@
+
+__Hamza Amentag__  
+Student ID: __011800245__
+
+---
 ## Part B - Application Modifications
 
 1.a. Resource bundles
