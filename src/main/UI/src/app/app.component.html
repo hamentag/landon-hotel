@@ -15,6 +15,14 @@
     <nav id="nav" style="position: relative; top: 0; left: 0; bottom: auto; right: auto; width: 100%;">
       <div class="navbar">
         <div class="brand"><a href="/#welcome">Landon <span>Hotel</span></a></div>
+        <!--   Welcome Messages     -->
+        <div class="welcomeMsgContainer">
+          <div *ngFor="let item of welcomeMessages | keyvalue">
+            <h2>{{ item.value }}</h2>
+          </div>
+        </div>
+        <!--      -->
+
       </div><!-- navbar -->
     </nav>
   </div>
@@ -23,10 +31,13 @@
   <div class="scene" id="welcome">
     <article class="content">
 
- 
+
 
       <div class="row">
         <div class=""col-12>
+          <div class="presentation-msg">
+            <p>{{ presentationMessage }}</p>
+          </div>
           <div class="gallery">
             <img src="assets/images/intro_room.jpg" alt="Intro Gallery Room Sample Pictures">
             <img src="assets/images/intro_pool.jpg" alt="Intro Gallery Pool Sample Pictures">
@@ -58,7 +69,7 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
 
@@ -75,7 +86,9 @@
                 </td>
                 <td>
                   <strong>Room #: {{room.roomNumber}}</strong><br/>
-                  <strong>Price: ${{room.price}}</strong>
+                  <strong>{{ room.price | currency:'USD':'symbol' }}</strong><br/>
+                  <strong>{{room.price | currency: 'CAD': 'symbol'}}</strong><br/>
+                  <strong>{{room.price | currency: 'EUR': 'symbol'}}</strong>
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>

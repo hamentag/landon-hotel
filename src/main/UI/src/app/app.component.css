@@ -936,4 +936,20 @@ footer #socialmedia ul li img {
   border-radius: 50%;
 }
 
+/* -- Welcome Messages -- */
+.welcomeMsgContainer {
+  display: flex;
+  flex-direction: column;
+}
+.welcomeMsgContainer h2 {
+  color: lawngreen;
+}
+/* -- */
+.presentation-msg p{
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: blue;
+}
+/* -- */
+
 /*# sourceMappingURL=style.css.map */

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
+import{Location,LocationStrategy} from "@angular/common";
 import {map} from "rxjs/operators";
 
 
@@ -15,9 +16,10 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
-  constructor(private httpClient:HttpClient){}
+  constructor(private httpClient:HttpClient, private location:Location, private locationStrategy:LocationStrategy){}
 
-  private baseURL:string='http://localhost:8080';
+  // private baseURL:string='http://localhost:8080';
+  private baseURL:string=this.location.path();
 
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
@@ -27,26 +29,84 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  welcomeMessages: any = {};
+  convertedTimes: any = {};
+  presentationMessage: string = '';
 
-    ngOnInit(){
-      this.roomsearch= new FormGroup({
-        checkin: new FormControl(' '),
-        checkout: new FormControl(' ')
-      });
-
- //     this.rooms=ROOMS;
-
-
-    const roomsearchValueChanges$ = this.roomsearch.valueChanges;
-
-    // subscribe to the stream
-    roomsearchValueChanges$.subscribe(x => {
-      this.currentCheckInVal = x.checkin;
-      this.currentCheckOutVal = x.checkout;
+  ngOnInit(){
+    this.roomsearch= new FormGroup({
+      checkin: new FormControl(' '),
+      checkout: new FormControl(' ')
     });
+
+//     this.rooms=ROOMS;
+
+
+  const roomsearchValueChanges$ = this.roomsearch.valueChanges;
+
+  // subscribe to the stream
+  roomsearchValueChanges$.subscribe(x => {
+    this.currentCheckInVal = x.checkin;
+    this.currentCheckOutVal = x.checkout;
+  });
+
+  // Call the backend to fetch welcome messages and converted times
+    this.fetchWelcomeMessages();
+    this.fetchConvertedTimes();
   }
 
-    onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
+  // Fetch welcome messages
+  fetchWelcomeMessages() {
+    this.httpClient.get<any>(this.baseURL + '/api/welcome')
+      .subscribe({
+        next: (response) => {
+          this.welcomeMessages = response;
+          console.log('Welcome Messages: ', response)
+        },
+        error: (error) => {
+          console.error('Failed to fetch welcome messages: ' + error.message);
+        }
+      });
+  }
+
+  // Generate a formatted message for the presentation
+  getPresentationMessage(): string {
+    if (
+      this.convertedTimes.date &&
+      this.convertedTimes.mountainTime &&
+      this.convertedTimes.easternTime &&
+      this.convertedTimes.utcTime
+    ) {
+      return (
+        `Join us for an online live presentation held at the Landon Hotel ` +
+        `on ${this.convertedTimes.date} ` +
+        `at ${this.convertedTimes.mountainTime} (Mountain Time) | ` +
+        `${this.convertedTimes.easternTime} (Eastern Time) | ` +
+        `${this.convertedTimes.utcTime} (UTC)`
+      );
+    } else {
+      return 'Loading presentation message...';
+    }
+  }
+
+  // Fetch converted times and set presentation message
+  fetchConvertedTimes() {
+    this.httpClient.get<any>(this.baseURL + '/api/converted-times')
+      .subscribe({
+        next: (response) => {
+          this.convertedTimes = response;
+          this.presentationMessage = this.getPresentationMessage();
+          console.log('Converted Times: ', response);
+          console.log('Presentation Message: ', this.presentationMessage)
+        },
+        error: (error) => {
+          console.error('Failed to fetch time data: ' + error.message);
+        }
+      });
+  }
+
+
+  onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
       this.getAll().subscribe(
 
         rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }
